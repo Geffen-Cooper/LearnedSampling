@@ -9,7 +9,7 @@ for seed in "${seeds[@]}"; do
     for architecture in "${architectures[@]}"; do
         for budget in "${budgets[@]}"; do
           python train_policy.py \
-                --single_sensor_checkpoint_prefix smartwatch_gesture_lstm32_budget${budget} \
+                --single_sensor_checkpoint_prefix smartwatch_gesture_lstm32_budget${budget}_random \
                 --logging_prefix learned_policy_budget${budget} \
                 --architecture "$architecture" \
                 --dataset gesture \

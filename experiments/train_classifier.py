@@ -9,7 +9,7 @@ from pathlib import Path
 
 from models.model_builder import model_builder
 from datasets.dataset import HARClassifierDataset, load_har_classifier_dataloaders
-from datasets.preprocess_raw_data import preprocess_DSADS, preprocess_RWHAR, preprocess_PAMAP2, preprocess_gesture
+from datasets.preprocess_raw_data import preprocess_DSADS, preprocess_RWHAR, preprocess_PAMAP2, preprocess_gesture, preprocess_gesture_impair
 from experiments.train import train, validate
 from utils.setup_funcs import PROJECT_ROOT, MODEL_ROOT, DATA_ROOT, init_logger, init_seeds
 from utils.parse_results import get_results
@@ -105,7 +105,7 @@ def train_LOOCV(**kwargs):
 			elif kwargs['dataset'] == 'gesture':
 				preprocess_gesture(DATA_ROOT[kwargs['dataset']])
 			elif kwargs['dataset'] == 'gesture_impair':
-				preprocess_gesture(DATA_ROOT[kwargs['dataset']])
+				preprocess_gesture_impair(DATA_ROOT[kwargs['dataset']])
 		kwargs['dataset_dir'] = preprocessed_path
 
 		train_loader,val_loader,test_loader = load_har_classifier_dataloaders(train_subjects, test_subjects, **kwargs)

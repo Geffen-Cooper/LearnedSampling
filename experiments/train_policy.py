@@ -16,7 +16,7 @@ from models.model_builder import model_builder
 from datasets.dataset import HARClassifierDataset, val_collate_fn, rnn_collate_fn
 from experiments.train import train, validate
 from utils.setup_funcs import PROJECT_ROOT, MODEL_ROOT, DATA_ROOT, init_logger, init_seeds
-from datasets.preprocess_raw_data import preprocess_DSADS, preprocess_RWHAR, preprocess_PAMAP2, preprocess_gesture
+from datasets.preprocess_raw_data import preprocess_DSADS, preprocess_RWHAR, preprocess_PAMAP2, preprocess_gesture, preprocess_gesture_impair
 from utils.parse_results import get_results
 
 
@@ -119,7 +119,7 @@ def train_LOOCV(**kwargs):
 			elif kwargs['dataset'] == 'gesture':
 				preprocess_gesture(DATA_ROOT[kwargs['dataset']])
 			elif kwargs['dataset'] == 'gesture_impair':
-				preprocess_gesture(DATA_ROOT[kwargs['dataset']])
+				preprocess_gesture_impair(DATA_ROOT[kwargs['dataset']])
 		kwargs['dataset_dir'] = preprocessed_path
 
 		kwargs['subjects'] = train_subjects
@@ -193,7 +193,7 @@ def train_LOOCV(**kwargs):
 			kwargs['lr_scheduler'] = torch.optim.lr_scheduler.CosineAnnealingLR(kwargs['optimizer'],kwargs['epochs'])
 			 
 
-			# train(**kwargs)
+			train(**kwargs)
 			
 
 			# try toload the best validation set from last skip_i
@@ -227,7 +227,7 @@ def train_LOOCV(**kwargs):
 			kwargs['val_loader'] = torch.utils.data.DataLoader(val_ds, batch_size=kwargs['classifier_batch_size'], shuffle=False, pin_memory=False,drop_last=True,num_workers=1,collate_fn=rnn_collate_fn)
 			test_loader = torch.utils.data.DataLoader(test_ds, batch_size=kwargs['classifier_batch_size'], shuffle=False, pin_memory=False,drop_last=True,num_workers=1,collate_fn=rnn_collate_fn) 
 
-			# train(**kwargs)
+			train(**kwargs)
 
 
 		# then here we enable classifier training and disable policy logging

@@ -722,26 +722,3 @@ def generate_activity_sequence(data,labels,min_duration,max_duration,sampling_ra
 		sample_counter += (end-start)
 
 	return X,y
-
-
-
-if __name__ == '__main__':
-	from LearnedSampling.experiments.train_classifier import get_args
-	from preprocess_raw_data import preprocess_DSADS
-
-	# get args as dict
-	args = get_args()
-	args = vars(args)
-
-	# preprocess
-	dataset_dir = os.path.expanduser("/home/gc28692/Projects/data/gestures-dataset/gestures-dataset")
-
-	# visualize preprocessed data
-	args['dataset_dir'] = os.path.join(dataset_dir,"preprocessed_data")
-	args['subjects'] = [1,2,3,4,5,6,7,8]
-	args['sensors'] = ['acc']
-	args['body_parts'] = ['right_wrist']
-	args['activities'] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-	args['window_size'] = 0
-	dataset = HARClassifierDataset(**args,train=True,val=False)
-	dataset.visualize_batch("right_wrist","acc")
